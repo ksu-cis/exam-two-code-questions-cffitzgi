@@ -4,9 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExamTwoQuestions.PointOfSale"
+             xmlns:data="clr-namespace:ExamTwoCodeQuestions.Data;assembly=ExamTwoCodeQuestions.Data"
+             xmlns:system="clr-namespace:System;assembly=mscorlib" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock>Customize Cobbler</TextBlock>
-    </Grid>
+    <UserControl.Resources>
+        <ObjectDataProvider MethodName="GetValues"
+                ObjectType="{x:Type system:Enum}"
+                x:Key="fruitFilling">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:FruitFilling"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock FontSize="50" FontWeight="Bold" Padding="20">Customize Cobbler</TextBlock>
+            <TextBlock VerticalAlignment="Center" FontSize="30" Text="{Binding Path=Price, StringFormat=c}"/>
+            <ListView VerticalAlignment="Center" FontSize="30" ItemsSource="{Binding Path=SpecialInstructions}"/>
+        </StackPanel>
+
+        <CheckBox FontSize="30" VerticalContentAlignment="Center" IsChecked="{Binding Path=WithIceCream}">With Ice Cream</CheckBox>
+
+        <Label Content="Fruit Filling" FontSize="30" Target="{Binding ElementName=cbFruitFilling}"/>
+        <ComboBox Name="cbRole" FontSize="30" SelectedItem="{Binding Path=Fruit}" ItemsSource="{Binding Source={StaticResource fruitFilling}}"/>
+    </StackPanel>
 </UserControl>
